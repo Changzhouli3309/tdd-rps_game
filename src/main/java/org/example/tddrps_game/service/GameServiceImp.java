@@ -1,10 +1,76 @@
 package org.example.tddrps_game.service;
 
 import org.example.tddrps_game.entity.Game;
+import org.example.tddrps_game.entity.Round;
+import org.example.tddrps_game.repository.GameRepo;
+import org.example.tddrps_game.repository.RoundRepo;
+import org.example.tddrps_game.util.GameProgress;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class GameServiceImp {
+import java.util.List;
 
-    public Game CreateGame(int scoreLimit){
-        return null;
+@Service
+public class GameServiceImp implements GameService {
+
+    private final GameRepo gameRepo;
+    private final RoundRepo roundRepo;
+    private final GameProgress gameProgress;
+
+    @Autowired
+    public GameServiceImp(GameRepo gameRepo, RoundRepo roundRepo) {
+        this.gameRepo = gameRepo;
+        this.roundRepo = roundRepo;
+        this.gameProgress = new GameProgress();
+    }
+
+    @Override
+    public Game createGame(int scoreLimit) {
+        return gameRepo.save(new Game(scoreLimit));
+    }
+
+    @Override
+    public List<Game> findAllGames() {
+        return (List<Game>) gameRepo.findAll();
+    }
+
+    @Override
+    public Game findGameById(long id) {
+        return gameRepo.findById(id).orElseThrow();
+    }
+
+    @Override
+    public List<Round> getAllRound(long id) {
+        return findGameById(id).getRounds();
+    }
+
+    @Override
+    public Round createRound(String playerMove, String aiMove, String result) {
+        return roundRepo.save(new Round(playerMove, aiMove, result));
+    }
+
+    @Override
+    public Round createRound(String playerMove, String aiMove) {
+        String result = gameProgress.getResult(playerMove, aiMove);
+        return createRound(playerMove, aiMove, result);
+    }
+
+    @Override
+    public Round createRound(String playerMove) {
+        String aiMove = gameProgress.getRandomAiMove();
+        return createRound(playerMove, aiMove);
+    }
+
+    @Override
+    public boolean addRoundToGame(Long id, Round round) {
+        Game game = findGameById(id);
+        if (game != null) {
+            List<Round> rounds = game.getRounds();
+            rounds.add(round);
+            game.setRounds(rounds);
+            gameRepo.save(game);
+            return true;
+        }
+        return false;
     }
 }

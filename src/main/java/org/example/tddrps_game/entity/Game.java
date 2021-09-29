@@ -12,9 +12,10 @@ public class Game {
     private Long id;
     private int scoreLimit, win, loss;
 
-    @ElementCollection
-    @JoinColumn(name = "Rid")
-    private List<Round> rounds = new ArrayList<>();
+    @ElementCollection(fetch = FetchType.EAGER)
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "id", cascade = CascadeType.ALL)
+    @JoinColumn(name = "Game_id")
+    private List<Round> rounds;
 
     public Game() {
         //jpa
@@ -24,6 +25,7 @@ public class Game {
         this.scoreLimit = scoreLimit;
         this.win = 0;
         this.loss = 0;
+        this.rounds = new ArrayList<>();
     }
 
     public Long getId() {
@@ -60,5 +62,16 @@ public class Game {
 
     public void setRounds(List<Round> rounds) {
         this.rounds = rounds;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", scoreLimit=" + scoreLimit +
+                ", win=" + win +
+                ", loss=" + loss +
+                ", rounds=" + rounds +
+                '}';
     }
 }

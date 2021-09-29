@@ -1,5 +1,7 @@
 package org.example.tddrps_game.util;
 
+import org.springframework.context.annotation.Bean;
+
 import java.util.Random;
 
 public class GameProgress {

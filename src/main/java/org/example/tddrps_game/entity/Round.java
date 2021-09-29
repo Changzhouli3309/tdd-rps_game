@@ -51,4 +51,14 @@ public class Round {
     public void setResult(String result) {
         this.result = result;
     }
+
+    @Override
+    public String toString() {
+        return "Round{" +
+                "id=" + id +
+                ", playerMove='" + playerMove + '\'' +
+                ", aiMove='" + aiMove + '\'' +
+                ", result='" + result + '\'' +
+                '}';
+    }
 }
