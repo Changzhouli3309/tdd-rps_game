@@ -35,42 +35,36 @@ public class GameServiceImp implements GameService {
     }
 
     @Override
-    public Game findGameById(long id) {
-        return gameRepo.findById(id).orElseThrow();
+    public Game findGameById(int id) {
+        return gameRepo.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
     @Override
-    public List<Round> getAllRound(long id) {
+    public List<Round> getAllRound(int id) {
         return findGameById(id).getRounds();
-    }
-
-    @Override
-    public Round createRound(String playerMove, String aiMove, String result) {
-        return roundRepo.save(new Round(playerMove, aiMove, result));
-    }
-
-    @Override
-    public Round createRound(String playerMove, String aiMove) {
-        String result = gameProgress.getResult(playerMove, aiMove);
-        return createRound(playerMove, aiMove, result);
     }
 
     @Override
     public Round createRound(String playerMove) {
         String aiMove = gameProgress.getRandomAiMove();
-        return createRound(playerMove, aiMove);
+        String result = gameProgress.getResult(playerMove, aiMove);
+        return roundRepo.save(new Round(playerMove, aiMove, result));
     }
 
     @Override
-    public boolean addRoundToGame(Long id, Round round) {
+    public boolean addRoundToGame(int id, Round round) {
         Game game = findGameById(id);
         if (game != null) {
             List<Round> rounds = game.getRounds();
             rounds.add(round);
             game.setRounds(rounds);
+
+            game = gameProgress.updateScore(game);
+
             gameRepo.save(game);
             return true;
         }
         return false;
     }
+
 }

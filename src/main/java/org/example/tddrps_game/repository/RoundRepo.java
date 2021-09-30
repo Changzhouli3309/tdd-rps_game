@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoundRepo extends CrudRepository<Round,Long> {
+public interface RoundRepo extends CrudRepository<Round,Integer> {
 }

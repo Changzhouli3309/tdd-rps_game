@@ -9,11 +9,10 @@ public class Game {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue
-    private Long id;
-    private int scoreLimit, win, loss;
+    private int id;
+    private int scoreLimit, win, lose;
 
     @ElementCollection(fetch = FetchType.EAGER)
-//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "id", cascade = CascadeType.ALL)
     @JoinColumn(name = "Game_id")
     private List<Round> rounds;
 
@@ -24,11 +23,11 @@ public class Game {
     public Game(int scoreLimit) {
         this.scoreLimit = scoreLimit;
         this.win = 0;
-        this.loss = 0;
+        this.lose = 0;
         this.rounds = new ArrayList<>();
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -48,12 +47,12 @@ public class Game {
         this.win = win;
     }
 
-    public int getLoss() {
-        return loss;
+    public int getLose() {
+        return lose;
     }
 
-    public void setLoss(int loss) {
-        this.loss = loss;
+    public void setLose(int lose) {
+        this.lose = lose;
     }
 
     public List<Round> getRounds() {
@@ -70,7 +69,7 @@ public class Game {
                 "id=" + id +
                 ", scoreLimit=" + scoreLimit +
                 ", win=" + win +
-                ", loss=" + loss +
+                ", loss=" + lose +
                 ", rounds=" + rounds +
                 '}';
     }

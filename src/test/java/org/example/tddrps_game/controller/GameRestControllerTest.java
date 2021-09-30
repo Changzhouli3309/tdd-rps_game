@@ -2,18 +2,20 @@ package org.example.tddrps_game.controller;
 
 import org.example.tddrps_game.entity.Game;
 import org.example.tddrps_game.entity.Round;
+import org.example.tddrps_game.model.GameReq;
+import org.example.tddrps_game.model.RoundReq;
 import org.example.tddrps_game.service.GameService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class GameRestControllerTest {
@@ -29,7 +31,7 @@ class GameRestControllerTest {
 
     private Game g1, g2;
     private Round r1, r2, r3;
-    private Long id1, id2;
+    private int id1, id2;
 
     @BeforeEach
     void init() {
@@ -47,17 +49,14 @@ class GameRestControllerTest {
         gameService.addRoundToGame(id1, r1);
         gameService.addRoundToGame(id1, r2);
         gameService.addRoundToGame(id2, r3);
-
-        g1.getRounds().add(r1);
-        g1.getRounds().add(r2);
-        g2.getRounds().add(r3);
     }
 
     @Test
-    void getAllGame_test() {
-        List<Game> expect = List.of(g1, g2);
-        List<Game> actual = Objects.requireNonNull(gameRestController.getAllGame().getBody());
-        assertEquals(expect.toString(), actual.toString());
+    void createGame_test(){
+        GameReq gameReq = new GameReq(3,"test");
+        ResponseEntity<Game> actual = gameRestController.createGame(gameReq);
+        System.out.println(Objects.requireNonNull(actual.getBody()).toString());
+        assertTrue(actual.hasBody());
     }
 
     @Test
@@ -80,7 +79,8 @@ class GameRestControllerTest {
 
     @Test
     void createRoundToGame_test() {
-        Round r4 = gameRestController.createRoundToGame(id2, "ROCK").getBody();
+        RoundReq roundReq = new RoundReq("ROCK","test");
+        Round r4 = gameRestController.createRoundToGame(id2, roundReq).getBody();
         assert r4 != null;
         List<Round> expect = List.of(r3, r4);
         List<Round> actual = Objects.requireNonNull(gameRestController.getAllRounds(id2).getBody());

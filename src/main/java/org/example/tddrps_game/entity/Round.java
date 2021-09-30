@@ -10,7 +10,7 @@ public class Round {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
-    private Long id;
+    private int id;
 
     private String playerMove, aiMove, result;
 
@@ -24,7 +24,7 @@ public class Round {
         this.result = result;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 

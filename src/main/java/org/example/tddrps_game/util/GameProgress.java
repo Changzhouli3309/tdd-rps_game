@@ -1,7 +1,10 @@
 package org.example.tddrps_game.util;
 
+import org.example.tddrps_game.entity.Game;
+import org.example.tddrps_game.entity.Round;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
 import java.util.Random;
 
 public class GameProgress {
@@ -36,9 +39,24 @@ public class GameProgress {
         throw new IllegalArgumentException("Illegal move");
     }
 
-
     public int getRandomNumber(int max, int min) {
         return ran.nextInt(max - min + 1) + min;
+    }
+
+    public Game updateScore(Game game){
+        List<Round> rounds = game.getRounds();
+        int win = 0, lose=0;
+        for (Round r : rounds){
+            if (r.getResult().equals("WIN")){
+                win++;
+            }
+            if (r.getResult().equals("LOSE")){
+                lose++;
+            }
+        }
+        game.setWin(win);
+        game.setLose(lose);
+        return game;
     }
 
 }

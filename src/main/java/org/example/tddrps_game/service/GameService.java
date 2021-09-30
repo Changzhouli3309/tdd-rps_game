@@ -10,15 +10,12 @@ public interface GameService {
 
     List<Game> findAllGames();
 
-    Game findGameById(long id);
+    Game findGameById(int id);
 
-    List<Round> getAllRound(long id);
-
-    Round createRound(String playerMove, String aiMove, String result);
-
-    Round createRound(String playerMove, String aiMove);
+    List<Round> getAllRound(int id);
 
     Round createRound(String playerMove);
 
-    boolean addRoundToGame(Long id, Round round);
+    boolean addRoundToGame(int id, Round round);
+
 }
