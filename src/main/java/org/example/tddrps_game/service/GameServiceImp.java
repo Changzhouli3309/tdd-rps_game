@@ -67,4 +67,14 @@ public class GameServiceImp implements GameService {
         return false;
     }
 
+    @Override
+    public boolean deleteGame(int id) {
+        Game game = findGameById(id);
+        if (game != null) {
+            gameRepo.delete(game);
+            return true;
+        }
+        return false;
+    }
+
 }

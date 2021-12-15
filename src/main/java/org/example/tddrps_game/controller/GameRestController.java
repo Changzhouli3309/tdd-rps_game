@@ -52,4 +52,13 @@ public class GameRestController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @DeleteMapping("/game/{id}")
+    public ResponseEntity<Game> deleteGame(@PathVariable int id){
+        if (gameService.deleteGame(id)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

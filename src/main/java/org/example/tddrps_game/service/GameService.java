@@ -18,4 +18,6 @@ public interface GameService {
 
     boolean addRoundToGame(int id, Round round);
 
+    boolean deleteGame(int id);
+
 }

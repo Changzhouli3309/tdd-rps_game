@@ -17,23 +17,23 @@ public class TestCommandLine implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Game g1, g2;
-        Round r1, r2, r3;
-        int id1, id2;
-
-        g1 = gameService.createGame(1);
-        id1 = g1.getId();
-
-        g2 = gameService.createGame(2);
-        id2 = g2.getId();
-
-        //"ROCK", "PAPER", "SCISSORS"
-        r1 = gameService.createRound("ROCK");
-        r2 = gameService.createRound("PAPER");
-        r3 = gameService.createRound("SCISSORS");
-
-        gameService.addRoundToGame(id1, r1);
-        gameService.addRoundToGame(id1, r2);
-        gameService.addRoundToGame(id2, r3);
+//        Game g1, g2;
+//        Round r1, r2, r3;
+//        int id1, id2;
+//
+//        g1 = gameService.createGame(1);
+//        id1 = g1.getId();
+//
+//        g2 = gameService.createGame(2);
+//        id2 = g2.getId();
+//
+//        //"ROCK", "PAPER", "SCISSORS"
+//        r1 = gameService.createRound("ROCK");
+//        r2 = gameService.createRound("PAPER");
+//        r3 = gameService.createRound("SCISSORS");
+//
+//        gameService.addRoundToGame(id1, r1);
+//        gameService.addRoundToGame(id1, r2);
+//        gameService.addRoundToGame(id2, r3);
     }
 }
